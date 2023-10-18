@@ -1,4 +1,4 @@
-name: Build cnitool
+name: build cnitool
 
 on:
   push:
