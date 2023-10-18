@@ -1,4 +1,4 @@
-name: build cnitool
+name: release
 
 on:
   push:
