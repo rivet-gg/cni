@@ -2,8 +2,8 @@ name: build cnitool
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -12,17 +12,28 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Go
-      uses: actions/setup-go@v2
+    - uses: actions/setup-go@v2
       with:
         go-version: '1.17'
 
-    - name: Build cnitool
-      run: go build -o cnitool ./cnitool
+    - run: go build -o cnitool ./path/to/cnitool/source
 
-    - name: Upload cnitool as artifact
-      uses: actions/upload-artifact@v2
+    - id: create_release
+      uses: actions/create-release@v1
       with:
-        name: cnitool-artifact
-        path: ./cnitool
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./cnitool
+        asset_name: cnitool
+        asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
