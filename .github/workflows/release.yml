@@ -31,7 +31,7 @@ jobs:
     - uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./cnitool
+        asset_path: ./cnitool/cnitool
         asset_name: cnitool
         asset_content_type: application/octet-stream
       env:
