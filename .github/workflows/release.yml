@@ -16,7 +16,7 @@ jobs:
       with:
         go-version: '1.17'
 
-    - run: go build -o cnitool ./path/to/cnitool/source
+    - run: go build -o cnitool ./cnitool
 
     - id: create_release
       uses: actions/create-release@v1
